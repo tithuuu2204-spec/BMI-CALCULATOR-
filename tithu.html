@@ -1,0 +1,546 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HealthAI | BMI Calculator</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: #f2f6fc;
+    color: #243047;
+}
+
+/* HEADER */
+header {
+    background: #ffffff;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+    color: #1769aa;
+}
+
+.logo span {
+    color: #18b89a;
+}
+
+.header-tag {
+    color: #64748b;
+    font-size: 13px;
+}
+
+/* HERO */
+.hero {
+    background: linear-gradient(120deg, #125da3, #168f9c);
+    color: white;
+    padding: 48px 7%;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    max-width: 650px;
+    line-height: 1.7;
+    color: #e2f4ff;
+}
+
+/* MAIN */
+.container {
+    max-width: 1100px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    margin-bottom: 20px;
+    font-size: 23px;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 16px;
+    box-shadow: 0 5px 25px rgba(20,50,90,0.06);
+}
+
+.card h2 {
+    margin-bottom: 10px;
+    font-size: 21px;
+}
+
+.subtitle {
+    color: #8290a5;
+    font-size: 13px;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin: 18px 0 8px;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #dce4ef;
+    border-radius: 9px;
+    outline: none;
+    font-size: 15px;
+}
+
+input:focus {
+    border-color: #168eaa;
+    box-shadow: 0 0 0 3px rgba(22,142,170,0.1);
+}
+
+.unit {
+    color: #8290a5;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 9px;
+    margin-top: 25px;
+    background: linear-gradient(90deg, #1769aa, #13a89a);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.reset {
+    background: #edf2f8;
+    color: #526176;
+    margin-top: 10px;
+}
+
+/* RESULT */
+.result-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.result-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.bmi-number {
+    font-size: 58px;
+    font-weight: 800;
+    color: #1769aa;
+    margin: 12px 0;
+}
+
+.category {
+    display: inline-block;
+    padding: 9px 22px;
+    background: #e8f8f1;
+    color: #13885e;
+    border-radius: 30px;
+    font-weight: 700;
+    margin: 8px auto 15px;
+}
+
+.result-message {
+    color: #758399;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+/* BMI SCALE */
+.scale-section {
+    margin-top: 28px;
+}
+
+.scale {
+    display: flex;
+    height: 12px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 18px 0 10px;
+}
+
+.scale div:nth-child(1) { background: #4ca6e8; width: 18.5%; }
+.scale div:nth-child(2) { background: #24b887; width: 6.5%; }
+.scale div:nth-child(3) { background: #f2ad45; width: 5%; }
+.scale div:nth-child(4) { background: #e66b71; width: 70%; }
+
+.scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #8592a5;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+td, th {
+    padding: 13px 10px;
+    border-bottom: 1px solid #edf0f5;
+    text-align: left;
+    font-size: 13px;
+}
+
+th {
+    color: #8290a5;
+}
+
+/* TIPS */
+.tips {
+    margin-top: 28px;
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 5px 25px rgba(20,50,90,0.05);
+}
+
+.tip-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.tip {
+    padding: 18px;
+    background: #f5f9fd;
+    border-radius: 12px;
+}
+
+.tip h3 {
+    font-size: 15px;
+    margin: 10px 0;
+}
+
+.tip p {
+    font-size: 13px;
+    color: #78869a;
+    line-height: 1.6;
+}
+
+footer {
+    text-align: center;
+    padding: 28px;
+    color: #8491a5;
+    font-size: 13px;
+    margin-top: 30px;
+}
+
+#message {
+    color: #d94848;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+@media(max-width: 750px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .tip-grid {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        padding: 18px 5%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Health<span>AI.</span></div>
+    <div class="header-tag">AI & ML Student Project | KU</div>
+</header>
+
+<section class="hero">
+    <h1>Your Personal BMI Calculator</h1>
+    <p>
+        Calculate your Body Mass Index, understand your BMI
+        category and explore simple wellness recommendations
+        with our smart healthcare assistant.
+    </p>
+</section>
+
+<main class="container">
+
+    <h2 class="section-title">BMI Analysis Dashboard</h2>
+
+    <div class="dashboard">
+
+        <!-- INPUT CARD -->
+        <div class="card">
+            <h2>Enter Your Details</h2>
+            <p class="subtitle">
+                Fill in your height and weight to calculate your BMI.
+            </p>
+
+            <label for="height">Height (cm)</label>
+            <input type="number" id="height"
+                   placeholder="Example: 170"
+                   min="1" max="250">
+
+            <p class="unit">Enter your height in centimeters.</p>
+
+            <label for="weight">Weight (kg)</label>
+            <input type="number" id="weight"
+                   placeholder="Example: 65"
+                   min="1" max="500">
+
+            <p class="unit">Enter your weight in kilograms.</p>
+
+            <button onclick="calculateBMI()">
+                Calculate My BMI →
+            </button>
+
+            <button class="reset" onclick="resetBMI()">
+                Reset Details
+            </button>
+
+            <p id="message"></p>
+        </div>
+
+        <!-- RESULT CARD -->
+        <div class="card result-card">
+
+            <div class="result-icon">🩺</div>
+            <h2>Your BMI Result</h2>
+
+            <p class="subtitle">
+                Your calculated Body Mass Index
+            </p>
+
+            <div class="bmi-number" id="bmi">--</div>
+
+            <div class="category" id="category">
+                Awaiting Result
+            </div>
+
+            <p class="result-message" id="resultMessage">
+                Enter your details to see your BMI analysis
+                and general wellness information.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- BMI SCALE -->
+    <div class="card scale-section">
+        <h2>BMI Classification</h2>
+        <p class="subtitle">
+            Standard adult BMI categories
+        </p>
+
+        <div class="scale">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="scale-labels">
+            <span>Underweight</span>
+            <span>Normal</span>
+            <span>Overweight</span>
+            <span>Obese</span>
+        </div>
+
+        <table>
+            <tr>
+                <th>BMI Range</th>
+                <th>Category</th>
+            </tr>
+            <tr>
+                <td>Below 18.5</td>
+                <td>Underweight</td>
+            </tr>
+            <tr>
+                <td>18.5 – 24.9</td>
+                <td>Normal weight</td>
+            </tr>
+            <tr>
+                <td>25 – 29.9</td>
+                <td>Overweight</td>
+            </tr>
+            <tr>
+                <td>30 or above</td>
+                <td>Obese</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- WELLNESS TIPS -->
+    <section class="tips">
+        <h2>Healthy Lifestyle Recommendations</h2>
+        <p class="subtitle">
+            Small daily habits can support your overall well-being.
+        </p>
+
+        <div class="tip-grid">
+
+            <div class="tip">
+                <div style="font-size:28px;">💧</div>
+                <h3>Stay Hydrated</h3>
+                <p>Drink water regularly throughout the day according to your needs.</p>
+            </div>
+
+            <div class="tip">
+                <div style="font-size:28px;">🏃</div>
+                <h3>Stay Active</h3>
+                <p>Include regular physical activity and movement in your routine.</p>
+            </div>
+
+            <div class="tip">
+                <div style="font-size:28px;">🥗</div>
+                <h3>Balanced Nutrition</h3>
+                <p>Choose a balanced diet with fruits, vegetables and nutritious foods.</p>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 HealthAI | AI-Based Health Assistant</p>
+    <p style="margin-top:8px;">
+        Educational project. BMI is a screening measure, not a medical diagnosis.
+    </p>
+</footer>
+
+<script>
+
+function calculateBMI() {
+
+    const height = parseFloat(document.getElementById("height").value);
+    const weight = parseFloat(document.getElementById("weight").value);
+
+    const message = document.getElementById("message");
+
+    message.innerText = "";
+
+    if (!Number.isFinite(height) || !Number.isFinite(weight) ||
+        height <= 0 || weight <= 0 ||
+        height > 250 || weight > 500) {
+
+        message.innerText =
+        "Please enter a valid height (up to 250 cm) and weight (up to 500 kg).";
+
+        return;
+    }
+
+    const heightInMeters = height / 100;
+
+    const bmi = weight / (heightInMeters * heightInMeters);
+
+    let category = "";
+    let advice = "";
+
+    if (bmi < 18.5) {
+
+        category = "Underweight";
+        advice = "Your BMI is below the standard adult healthy range. Consider discussing your nutrition and health with a healthcare professional.";
+
+    }
+
+    else if (bmi < 25) {
+
+        category = "Normal Weight";
+        advice = "Your BMI falls within the standard adult healthy range. Continue maintaining balanced nutrition, regular activity and good sleep.";
+
+    }
+
+    else if (bmi < 30) {
+
+        category = "Overweight";
+        advice = "Your BMI is above the standard adult healthy range. Consider discussing your overall health and lifestyle with a healthcare professional.";
+
+    }
+
+    else {
+
+        category = "Obese";
+        advice = "Your BMI is in the obesity range. Consider consulting a healthcare professional for an individual health assessment.";
+
+    }
+
+    document.getElementById("bmi").innerText = bmi.toFixed(1);
+
+    document.getElementById("category").innerText = category;
+
+    document.getElementById("resultMessage").innerText = advice;
+
+}
+
+function resetBMI() {
+
+    document.getElementById("height").value = "";
+    document.getElementById("weight").value = "";
+
+    document.getElementById("bmi").innerText = "--";
+
+    document.getElementById("category").innerText =
+    "Awaiting Result";
+
+    document.getElementById("resultMessage").innerText =
+    "Enter your details to see your BMI analysis and general wellness information.";
+
+    document.getElementById("message").innerText = "";
+
+}
+
+</script>
+
+</body>
+</html>
